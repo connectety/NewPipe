@@ -1639,10 +1639,14 @@ public abstract class BasePlayer implements
                 && prefs.getBoolean(context.getString(R.string.enable_playback_resume_key), true);
     }
 
-    public void setTimer(int hourOfDay, int minute, Context ctx) {
-        long time = ((hourOfDay * 60) + minute) * 60 * 1000;
+    public void setTimer(final int hourOfDay, final int minute, final Context ctx) {
+        final long time = ((hourOfDay * 60) + minute) * 60 * 1000;
         if (time == 0) {
-            Toast.makeText(ctx, ctx.getString(R.string.timer_select_time_message), Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    ctx,
+                    ctx.getString(R.string.timer_select_time_message),
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
         timer.cancel();
@@ -1654,20 +1658,21 @@ public abstract class BasePlayer implements
             @Override
             public void run() {
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    if (DEBUG) Log.d(TAG, "Timer finished: Stopping the player");
+                    if (DEBUG) {
+                        Log.d(TAG, "Timer finished: Stopping the player");
+                    }
                     onPause();
                 });
 
             }
         }, time);
-        Date d = new Date();
-        d.setTime(System.currentTimeMillis() + time);
-        Toast.makeText(ctx.getApplicationContext(), String.format(ctx.getString(R.string.player_stop_message), d.toString()), Toast.LENGTH_LONG).show();
-    }
-
-    public void cancelTimer() {
-        timer.cancel();
-        timer.purge();
+        final Date date = new Date();
+        date.setTime(System.currentTimeMillis() + time);
+        Toast.makeText(
+                ctx.getApplicationContext(),
+                String.format(ctx.getString(R.string.player_stop_message), date.toString()),
+                Toast.LENGTH_LONG
+        ).show();
     }
 
     public int getHourOfDay() {
