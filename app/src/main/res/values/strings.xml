@@ -674,4 +674,9 @@
     <string name="channel_created_by">Created by %s</string>
     <string name="video_detail_by">By %s</string>
     <string name="playlist_page_summary">Playlist page</string>
+
+    <!--  Timer Constants  -->
+    <string name="set_timer">Set Timer</string>
+    <string name="player_stop_message">Player will stop at %s</string>
+    <string name="timer_select_time_message">Please select an appropriate time.</string>
 </resources>

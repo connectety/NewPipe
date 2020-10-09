@@ -1,5 +1,6 @@
 package org.schabi.newpipe.player;
 
+import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -190,8 +191,17 @@ public abstract class ServicePlayerActivity extends AppCompatActivity
                         getSwitchIntent(MainActivity.class, MainPlayer.PlayerType.VIDEO)
                                 .putExtra(BasePlayer.START_PAUSED, !this.player.isPlaying()));
                 return true;
+            case R.id.action_set_timer:
+                updateTimer(this);
+                return true;
         }
         return onPlayerOptionSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    private void updateTimer(ServicePlayerActivity servicePlayerActivity) {
+        TimePickerDialog dialog = new TimePickerDialog(servicePlayerActivity, (view, hourOfDay, minute) ->
+                player.setTimer(hourOfDay, minute, getApplicationContext()), player.getHourOfDay(), player.getMinutes(), true);
+        dialog.show();
     }
 
     @Override
